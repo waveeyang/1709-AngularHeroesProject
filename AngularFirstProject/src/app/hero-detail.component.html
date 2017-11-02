@@ -1,5 +1,6 @@
 <div *ngIf="hero">
-        <h2>{{hero.name}} details!</h2>
+    <button (click)="goBack()">Back</button>
+        <h2>{{hero.name}} Details</h2>
         <div><label>id: </label>{{hero.id}}</div>
         <!-- [(ngModel)] is a 2 way data binding between -->
         <div>
@@ -7,6 +8,6 @@
           <input [(ngModel)]="hero.name" placeholder="name">
         </div>
         <div>
-          <img src="{{hero.image}}"/>
+          <img width="200" src="{{hero.image}}"/>
         </div>
 </div>

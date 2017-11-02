@@ -12,6 +12,11 @@ export class HeroService {
      *  You ask an asynchronous service to do some work and give it a callback function
      * The service does that work and eventually calls the function with the results or an error
      */
+    getHero(id: number): Promise<Hero> {
+        return this.getHeroes()
+            .then(heroList => heroList.find(hero => hero.id === id));
+    }
+
     getHeroes(): Promise<Hero[]> {
         return Promise.resolve(HEROES);
     } 
