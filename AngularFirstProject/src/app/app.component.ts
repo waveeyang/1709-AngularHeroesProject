@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-export class Hero {
-  id: number;
-  name: string;
-}
-
+import { Hero } from './hero';
+import { HeroService } from './hero.service';
 /**
  * 
  * Component decorator:
@@ -14,27 +11,33 @@ export class Hero {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  
+  providers: [HeroService]
 })
-export class AppComponent {
+/**
+ * Don't use the new keyword for Services, it will create a new one each time
+ *  What if the service caches heroes and shares that cache with others? You couldn't do that.
+With the AppComponent locked into a specific implementation of the HeroService, switching implementations for different scenarios, 
+such as operating offline or using different mocked versions for testing, would be difficult.
+ */
+export class AppComponent implements OnInit {
+  //init
+  ngOnInit(): void {
+    this.getHeroes();
+  }
   title = 'Supercalifragilisticexpialidocious';
   selectedHero: Hero;
-  heroes = HEROES;
+  heroes: Hero[];
+
+  //click fun
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
-}
 
-const HEROES: Hero[] = [
-    { id: 10, name: 'Illidan Stormrage' },
-    { id: 11, name: 'Anakin Skywalker' },
-    { id: 12, name: 'Arthas Menethil' },
-    { id: 13, name: 'Legolas' },
-    { id: 14, name: 'Martin the Warrior' },
-    { id: 15, name: 'Aragorn' },
-    { id: 16, name: 'Batman' },
-    { id: 17, name: 'Wolverine' },
-    { id: 18, name: 'Uchiha Sasuke' },
-    { id: 19, name: 'Uchiha Itachi' },
-    { id: 20, name: 'Gimli' }
-];
+  //constructor
+  constructor(private heroService: HeroService) {}
+
+
+  getHeroes(): void {
+    this.heroService.getHeroes().then(heroList => this.heroes = heroList);
+  }
+}
