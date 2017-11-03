@@ -14,7 +14,8 @@ and end in .component.ts. The HeroDetailComponent class goes in the hero-detail.
  */
 @Component({
     selector: 'hero-detail',
-    templateUrl: './hero-detail.component.html'
+    templateUrl: './hero-detail.component.html',
+    styleUrls: ['./hero-detail.component.css'],
 })
 
 //Always export the component class because you'll always import it elsewhere.
